@@ -17,14 +17,5 @@
     state: started
     enabled: yes
 
-- name: install python3.12 pip
-  ansible.builtin.dnf:
-    name: python3.12-pip
-    state: present
-
-- name: install boto3 and botocore
-  ansible.builtin.command:
-    cmd: /usr/bin/python3.12 -m pip install boto3 botocore
-
 - name: setup root password
   ansible.builtin.command: "mysql_secure_installation --set-root-pass {{ lookup('aws_ssm', '/roboshop/{{env}}/mysql_root_pass', region='us-east-1', decrypt=True) }}"
